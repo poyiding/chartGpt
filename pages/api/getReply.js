@@ -1,6 +1,7 @@
  
  import axios from 'axios';
 
+ const apiKey = process.env.OPENAI_API_KEY; 
 
  const CHATGPT_MODEL = 'gpt-3.5-turbo';
 
@@ -53,16 +54,16 @@
 }
 
  export async function getReply(opts) {
-
+  console.log(apiKey)
   const api = new ChatGPTAPI({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: apiKey,
     completionParams: {
       temperature: 0.5,
       top_p: 0.8,
     },
   });
-  const prompt = opts.prompt;
 
+  const prompt = opts.prompt;
 
   const res = await api.sendMessage(`${prompt}\n`);
 
