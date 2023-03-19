@@ -1,6 +1,6 @@
 import { addMessage, getHistoryString } from "@/utils/chatHistory";
 import React, { useEffect } from "react";
-import { getReply } from '@/pages/api/getReply'
+// import { getReply } from '@/pages/api/getReply'
 
 export const useChatGpt = (message, promptId, chatHistory) => {
   // Send user meesage to api, meesage and prompt in body
@@ -15,37 +15,38 @@ export const useChatGpt = (message, promptId, chatHistory) => {
   const fetchData = async () => {
     setIsLoading(true);
 
-    // try {
-    //   const response = await fetch("/api/chatgpt", {
-    //     method: "POST",
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       message,
-    //       promptId,
-    //       chatHistory: getHistoryString(chatHistory),
-    //     }),
-    //   }).then((res) => res.json());
-    //   if (response.reply) {
-    //     console.log("Hook api call response", response.reply);
-    //     setData(response.reply);
-    //     setIsSuccess(true);
-    //     setHistory(addMessage(chatHistory, response.reply, "agent"));
-    //   } else {
-    //     setIsError(true);
-    //   }
-    // } catch (error) {
-    //   setIsError(true);
-    // }
-    const response = await getReply({ prompt: message })
-    console.log('response ', response)
-    if(response.choices) {
-      const reply = choices[0].message.content
-        setData(reply);
+    try {
+      const response = await fetch("/api/chatgpt", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          message,
+          promptId,
+          chatHistory: getHistoryString(chatHistory),
+        }),
+      }).then((res) => res.json());
+      if (response.reply) {
+        console.log("Hook api call response", response.reply);
+        setData(response.reply);
         setIsSuccess(true);
-        setHistory(addMessage(chatHistory, reply, "agent"));
+        setHistory(addMessage(chatHistory, response.reply, "agent"));
+      } else {
+        setIsError(true);
+      }
+    } catch (error) {
+      setIsError(true);
     }
+
+    // const response = await getReply({ prompt: message })
+    // console.log('response ', response)
+    // if(response.choices) {
+    //   const reply = choices[0].message.content
+    //     setData(reply);
+    //     setIsSuccess(true);
+    //     setHistory(addMessage(chatHistory, reply, "agent"));
+    // }
     
 
     setIsLoading(false);

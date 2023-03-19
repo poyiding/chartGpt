@@ -1,9 +1,9 @@
  
  import axios from 'axios';
 
-//  const apiKey = process.env.OPENAI_API_KEY; 
+const apiKey = process.env.OPENAI_API_KEY; 
 // 
- const apiKey = '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'; 
+
 
  const CHATGPT_MODEL = 'gpt-3.5-turbo';
 
