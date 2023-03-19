@@ -4,7 +4,7 @@ import { Button, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { ChatHistoryFrame } from "./ChatHistoryFrame";
 
-const promptId = "cld9piv9j049zi7ehio0g5979";
+const promptId = "clfbz4z6s13a1i7eh4sc9ip5j";
 
 export const ChatContainer = () => {
   const [pendingMessage, setPendingMessage] = React.useState("");
