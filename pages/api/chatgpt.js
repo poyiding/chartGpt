@@ -10,7 +10,7 @@ const tokenizer = new GPT3Tokenizer({ type: "gpt3" });
 
 const chatgpt = async (req, res) => {
   const { message, promptId, chatHistory } = req.body;
-  const getPromptId = process.env.OPENAI_API_KEY || promptId;
+  const getPromptId = process.env.PROMPT_ID || promptId;
   console.log("api call entry", message, promptId);
   if (!message) {
     res.status(400).json({ error: "Message is required" });
@@ -21,7 +21,7 @@ const chatgpt = async (req, res) => {
     return;
   }
   // call prompt ai api and openai api
-  const reply = await getReply(message, promptId, chatHistory || "");
+  const reply = await getReply(message, getPromptId, chatHistory || "");
   res.status(200).json({ reply });
   return;
 };
